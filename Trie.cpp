@@ -1,11 +1,14 @@
 // Trie
 #include<iostream>
+#include<vector>
+
 using namespace std;
 
-struct TrieNode
+class TrieNode
 {
+	public:
 	char data;
-	TrieNode *child[26];
+	TrieNode *child[27];
 	bool terminates;
 	static int CharToIndex(char c)
 	{
@@ -16,6 +19,16 @@ struct TrieNode
 	{
 		std::fill(child, child + 26, (TrieNode*)NULL);
 	}	
+};
+
+class TrieTerminatingNode:public TrieNode
+{
+	public:
+	vector<pair<int, int>> info;
+	TrieTerminatingNode():TrieNode('-')
+	{
+		
+	}
 };
 
 class Trie
@@ -40,11 +53,30 @@ class Trie
 			}
 			temp = temp->child[TrieNode::CharToIndex(s[i])];
 		}
-		temp->terminates = true;
+		{
+			temp->terminates = true;
+			temp->child[27] = new TrieTerminatingNode();
+		}
 	}
-	remove(string s)
+	void remove(string s)
 	{
+		TrieNode *temp = root;
+		int deletePos = 0;
+		TrieNode *deleteNode = root;
 		
+		for(int i = 0; i<s.length();i++)
+		{
+			if(temp->child[TrieNode::CharToIndex(s[i])] == NULL )
+			{
+				return;
+			}
+			if(temp->terminates == true)
+			{
+				deletePos = i;
+				deleteNode = temp;
+			}
+			temp = temp->child[TrieNode::CharToIndex(s[i])];
+		}
 	}
 	bool find(string s)
 	{
