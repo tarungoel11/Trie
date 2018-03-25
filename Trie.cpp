@@ -28,10 +28,10 @@ class Trie
 		root = new TrieNode('*');
 	}
 	
-	insert(char *s, int length)
+	insert(string s)
 	{
 		TrieNode *temp = root;
-		for(int i = 0; i<length;i++)
+		for(int i = 0; i<s.length();i++)
 		{
 			if(temp->child[TrieNode::CharToIndex(s[i])] == NULL )
 			{
@@ -42,14 +42,14 @@ class Trie
 		}
 		temp->terminates = true;
 	}
-	remove(char *s, int length)
+	remove(string s)
 	{
 		
 	}
-	bool find(char *s, int length)
+	bool find(string s)
 	{
 		TrieNode *temp = root;
-		for(int i = 0; i<length;i++)
+		for(int i = 0; i<s.length();i++)
 		{
 			temp = temp->child[TrieNode::CharToIndex(s[i])];
 			if(temp == NULL )
@@ -72,7 +72,8 @@ class Trie
 int main()
 {
 	Trie t;
-	t.insert("harry", 5);
-	cout<<t.find("harry", 5);
+	t.insert("harry");
+	t.insert("hari");
+	cout<<t.find("hari");
 }
 
